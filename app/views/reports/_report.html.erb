@@ -1,0 +1,13 @@
+<div id="<%= dom_id report %>" class="w-full sm:w-auto my-5 p-4 bg-white rounded-comfortable">
+  <div class="flex justify-between items-center mb-2">
+    <p class="text-caption text-olive-gray">
+      <%= l report.learning_date %>
+    </p>
+    <p class="text-caption text-olive-gray">
+      <%= report.user.name %> が <%= report.student.name %> のために作成
+    </p>
+  </div>
+  <p class="text-body text-plum-black">
+    <%= truncate(report.content, length: 150) %>
+  </p>
+</div>

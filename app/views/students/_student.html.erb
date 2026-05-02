@@ -1,0 +1,14 @@
+<div id="<%= dom_id student %>" class="w-full sm:w-auto my-5 p-4 bg-white rounded-comfortable">
+  <div class="flex items-center">
+    <p class="text-body font-semibold text-plum-black mr-2"><%= student.name %></p>
+    <span class="<%= student_status_class(student.enrollment_status) %> text-caption font-medium px-2.5 py-0.5 rounded-circle">
+      <%= student.enrollment_status.humanize %>
+    </span>
+  </div>
+  <% if student.admission_date.present? %>
+    <p class="text-caption text-olive-gray">入学日: <%= l student.admission_date %></p>
+  <% end %>
+  <% if student.memo.present? %>
+    <p class="text-caption text-plum-black"><%= student.memo %></p>
+  <% end %>
+</div>
