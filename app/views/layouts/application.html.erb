@@ -14,13 +14,13 @@
   <body class="bg-fog font-pin-sans text-plum-black">
     <header class="bg-white shadow-md py-4">
       <div class="container mx-auto px-4 flex justify-between items-center">
-        <%= link_to "日報アプリ", root_path, class: "text-2xl font-bold text-plum-black" %>
+        <%= link_to "日報アプリ", root_path, class: "text-section-heading font-bold text-plum-black" %>
         <nav>
           <ul class="flex space-x-4">
             <li><%= link_to "日報一覧", reports_path, class: "text-olive-gray hover:text-plum-black text-body" %></li>
             <li><%= link_to "生徒管理", students_path, class: "text-olive-gray hover:text-plum-black text-body" %></li>
             <% if logged_in? %>
-              <li><%= button_to "ログアウト", session_path, method: :delete, class: "text-pinterest-red hover:text-red-800 text-body bg-transparent border-none cursor-pointer" %></li>
+              <li><%= button_to "ログアウト", session_path, method: :delete, class: "text-olive-gray hover:text-plum-black text-body bg-transparent border-none cursor-pointer" %></li>
             <% else %>
               <li><%= link_to "ログイン", new_session_path, class: "text-green-700 hover:text-green-700-hover text-body" %></li>
             <% end %>

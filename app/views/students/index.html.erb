@@ -1,10 +1,6 @@
 <% content_for :title, "Students" %>
 
 <div class="w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-700 text-white mb-5 font-medium rounded-button inline-block" id="notice"><%= notice %></p>
-  <% end %>
-
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-section-heading text-plum-black">生徒一覧</h1>
     <% if current_user&.admin? %>

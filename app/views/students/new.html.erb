@@ -1,9 +1,11 @@
-<% content_for :title, "New student" %>
+<% content_for :title, "新規生徒登録" %>
 
 <div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">New student</h1>
+  <h1 class="font-bold text-section-heading text-plum-black mb-6">新規生徒登録</h1>
 
   <%= render "form", student: @student %>
 
-  <%= link_to "Back to students", students_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <div class="flex flex-wrap gap-2 mt-4">
+    <%= link_to "一覧に戻る", students_path, class: "rounded-button px-3.5 py-2.5 bg-sand-gray hover:bg-warm-light text-black inline-block font-normal text-button" %>
+  </div>
 </div>
