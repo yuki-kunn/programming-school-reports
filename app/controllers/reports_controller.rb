@@ -13,11 +13,13 @@ class ReportsController < ApplicationController
 
   # GET /reports/new
   def new
-    @report = current_user.reports.build
+    @report = current_user.reports.build(learning_date: Date.current)
+    @students = Student.active_students.order(:name)
   end
 
   # GET /reports/1/edit
   def edit
+    @students = Student.active_students.order(:name)
   end
 
   # POST /reports or /reports.json
@@ -29,6 +31,7 @@ class ReportsController < ApplicationController
         format.html { redirect_to @report, notice: "日報が正常に作成されました。" }
         format.json { render :show, status: :created, location: @report }
       else
+        @students = Student.active_students.order(:name)
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @report.errors, status: :unprocessable_entity }
       end
@@ -42,6 +45,7 @@ class ReportsController < ApplicationController
         format.html { redirect_to @report, notice: "日報が正常に更新されました。" }
         format.json { render :show, status: :ok, location: @report }
       else
+        @students = Student.active_students.order(:name)
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @report.errors, status: :unprocessable_entity }
       end
