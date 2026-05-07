@@ -1,10 +1,6 @@
 <% content_for :title, "Reports" %>
 
 <div class="w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-700 text-white mb-5 font-medium rounded-button inline-block" id="notice"><%= notice %></p>
-  <% end %>
-
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-section-heading text-plum-black">日報一覧</h1>
     <%= link_to "新規日報", new_report_path, class: "rounded-button px-3.5 py-2.5 bg-pinterest-red hover:bg-red-700 text-black block font-normal text-button" %>
@@ -17,8 +13,10 @@
           <%= render report %>
           <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
             <%= link_to "詳細", report, class: "w-full sm:w-auto text-center rounded-button px-3.5 py-2.5 bg-sand-gray hover:bg-warm-light text-black inline-block font-normal text-button" %>
-            <%= link_to "編集", edit_report_path(report), class: "w-full sm:w-auto text-center rounded-button px-3.5 py-2.5 bg-sand-gray hover:bg-warm-light text-black inline-block font-normal text-button" %>
-            <%= button_to "削除", report, method: :delete, class: "w-full sm:w-auto rounded-button px-3.5 py-2.5 text-black bg-error-red hover:bg-red-700 font-normal text-button cursor-pointer", data: { turbo_confirm: "本当に削除しますか？" } %>
+            <% if current_user == report.user %>
+              <%= link_to "編集", edit_report_path(report), class: "w-full sm:w-auto text-center rounded-button px-3.5 py-2.5 bg-sand-gray hover:bg-warm-light text-black inline-block font-normal text-button" %>
+              <%= button_to "削除", report, method: :delete, class: "w-full sm:w-auto rounded-button px-3.5 py-2.5 text-black bg-error-red hover:bg-red-700 font-normal text-button cursor-pointer", data: { turbo_confirm: "本当に削除しますか？" } %>
+            <% end %>
           </div>
         </div>
       <% end %>

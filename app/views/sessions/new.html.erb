@@ -25,5 +25,9 @@
         <%= form.submit "ログイン", class: "flex w-full justify-center rounded-button bg-pinterest-red py-1.5 px-3.5 text-body font-normal leading-6 text-black shadow-sm hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pinterest-red" %>
       </div>
     <% end %>
+
+    <p class="mt-6 text-center text-caption text-olive-gray">
+      アカウントをお持ちでない方は <%= link_to "こちらから登録", new_user_path, class: "text-link-blue hover:underline" %>
+    </p>
   </div>
 </div>

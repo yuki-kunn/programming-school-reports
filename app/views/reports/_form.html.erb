@@ -13,7 +13,7 @@
 
   <div class="my-5">
     <%= form.label :student_id, "生徒", class: "block text-caption-bold text-olive-gray" %>
-    <%= form.collection_select :student_id, Student.all, :id, :name, { prompt: "生徒を選択してください" }, class: "mt-1 block w-full rounded-button border border-warm-silver py-2.5 px-3.5 text-plum-black shadow-sm focus:border-focus-blue focus:ring-focus-blue sm:text-body" %>
+    <%= form.collection_select :student_id, @students, :id, :name, { prompt: "生徒を選択してください" }, class: "mt-1 block w-full rounded-button border border-warm-silver py-2.5 px-3.5 text-plum-black shadow-sm focus:border-focus-blue focus:ring-focus-blue sm:text-body" %>
   </div>
 
   <div class="my-5">

@@ -1,5 +1,6 @@
 class StudentsController < ApplicationController
   before_action :set_student, only: %i[ show edit update destroy ]
+  before_action :require_admin, only: [:new, :create, :edit, :update, :destroy]
 
   # GET /students or /students.json
   def index
@@ -25,7 +26,7 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @student.save
-        format.html { redirect_to @student, notice: "Student was successfully created." }
+        format.html { redirect_to @student, notice: "生徒を登録しました" }
         format.json { render :show, status: :created, location: @student }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +39,7 @@ class StudentsController < ApplicationController
   def update
     respond_to do |format|
       if @student.update(student_params)
-        format.html { redirect_to @student, notice: "Student was successfully updated." }
+        format.html { redirect_to @student, notice: "生徒情報を更新しました" }
         format.json { render :show, status: :ok, location: @student }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +53,7 @@ class StudentsController < ApplicationController
     @student.destroy
 
     respond_to do |format|
-      format.html { redirect_to students_path, status: :see_other, notice: "Student was successfully destroyed." }
+      format.html { redirect_to students_path, status: :see_other, notice: "生徒を削除しました" }
       format.json { head :no_content }
     end
   end
@@ -66,5 +67,12 @@ class StudentsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def student_params
       params.require(:student).permit(:name, :admission_date, :enrollment_status, :memo)
+    end
+
+    def require_admin
+      unless current_user&.admin?
+        flash[:alert] = "管理者権限が必要です"
+        redirect_to students_path
+      end
     end
 end
