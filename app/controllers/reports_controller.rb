@@ -3,7 +3,12 @@ class ReportsController < ApplicationController
   before_action :ensure_correct_user, only: %i[edit update destroy]
 
   def index
+    @tags = Tag.order(:name)
+    @current_tag = Tag.find_by(id: params[:tag_id])
     @reports = Report.includes(:user, :student).order(learning_date: :desc)
+    if @current_tag
+      @reports = @reports.joins(:student).where(students: { tag_id: @current_tag.id })
+    end
   end
 
   def show

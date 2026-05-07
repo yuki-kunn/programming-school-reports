@@ -1,3 +1,8 @@
+# タグ（カテゴリ）の作成
+fs_tag   = Tag.find_or_create_by!(name: 'FS')
+lego_tag = Tag.find_or_create_by!(name: 'LEGO')
+mbot_tag = Tag.find_or_create_by!(name: 'mbot2')
+
 admin = User.find_or_create_by!(email: 'admin@example.com') do |u|
   u.name = '管理者'
   u.password = 'password123'
@@ -11,10 +16,15 @@ teacher = User.find_or_create_by!(email: 'teacher@example.com') do |u|
 end
 
 students = [
-  { name: '田中 花子', admission_date: '2025-04-01', enrollment_status: :active },
-  { name: '佐藤 一郎', admission_date: '2025-04-01', enrollment_status: :active },
-  { name: '山田 次郎', admission_date: '2024-04-01', enrollment_status: :graduated },
-].map { |attrs| Student.find_or_create_by!(name: attrs[:name]) { |s| s.assign_attributes(attrs) } }
+  { name: '田中 花子', admission_date: '2025-04-01', enrollment_status: :active, tag: fs_tag },
+  { name: '佐藤 一郎', admission_date: '2025-04-01', enrollment_status: :active, tag: lego_tag },
+  { name: '山田 次郎', admission_date: '2024-04-01', enrollment_status: :graduated,  tag: mbot_tag },
+].map do |attrs|
+  student = Student.find_or_initialize_by(name: attrs[:name])
+  student.assign_attributes(attrs)
+  student.save!
+  student
+end
 
 [
   { student: students[0], content: "Rubyの変数とデータ型について学習しました。特に配列とハッシュの違いを理解できました。次回はメソッドの定義を学ぶ予定です。", learning_date: Date.today },

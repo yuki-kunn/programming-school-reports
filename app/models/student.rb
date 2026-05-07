@@ -1,5 +1,6 @@
 class Student < ApplicationRecord
   has_many :reports
+  belongs_to :tag, optional: true
 
   validates :name, presence: true
   enum enrollment_status: { active: 0, graduated: 1, on_leave: 2 }

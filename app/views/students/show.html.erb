@@ -31,6 +31,16 @@
     </div>
 
     <dl class="space-y-0 divide-y divide-slate-100">
+      <% if @student.tag %>
+        <div class="flex gap-4 py-4">
+          <dt class="w-32 shrink-0 text-sm font-medium text-slate-500">カテゴリ</dt>
+          <dd>
+            <span class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium bg-indigo-100 text-indigo-700">
+              🏷️ <%= @student.tag.name %>
+            </span>
+          </dd>
+        </div>
+      <% end %>
       <div class="flex gap-4 py-4">
         <dt class="w-32 shrink-0 text-sm font-medium text-slate-500">入学日</dt>
         <dd class="text-sm text-slate-900">

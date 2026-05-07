@@ -9,6 +9,23 @@
       class: "inline-flex items-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors" %>
 </div>
 
+<%# タグフィルタータブ %>
+<div class="flex flex-wrap gap-2 mb-6">
+  <%= link_to "すべて", reports_path,
+      class: "px-4 py-2 rounded-full text-sm font-medium transition-colors #{@current_tag.nil? ? 'bg-indigo-600 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-indigo-300 hover:text-indigo-600'}" %>
+  <% @tags.each do |tag| %>
+    <%= link_to tag.name, reports_path(tag_id: tag.id),
+        class: "px-4 py-2 rounded-full text-sm font-medium transition-colors #{@current_tag == tag ? 'bg-indigo-600 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-indigo-300 hover:text-indigo-600'}" %>
+  <% end %>
+</div>
+
+<% if @current_tag %>
+  <p class="text-sm text-slate-500 mb-4">
+    <span class="font-medium text-slate-700"><%= @current_tag.name %></span> の日報
+    <span class="ml-1 text-slate-400">(<%= @reports.count %>件)</span>
+  </p>
+<% end %>
+
 <% if @reports.any? %>
   <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
     <div class="divide-y divide-slate-100">

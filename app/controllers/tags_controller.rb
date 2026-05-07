@@ -1,0 +1,54 @@
+class TagsController < ApplicationController
+  before_action :require_admin
+  before_action :set_tag, only: %i[edit update destroy]
+
+  def index
+    @tags = Tag.includes(:students).order(:name)
+  end
+
+  def new
+    @tag = Tag.new
+  end
+
+  def create
+    @tag = Tag.new(tag_params)
+    if @tag.save
+      redirect_to tags_path, notice: "タグを作成しました"
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @tag.update(tag_params)
+      redirect_to tags_path, notice: "タグを更新しました"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @tag.destroy
+    redirect_to tags_path, notice: "タグを削除しました"
+  end
+
+  private
+
+  def set_tag
+    @tag = Tag.find(params[:id])
+  end
+
+  def tag_params
+    params.require(:tag).permit(:name)
+  end
+
+  def require_admin
+    unless current_user&.admin?
+      flash[:alert] = "管理者権限が必要です"
+      redirect_to root_path
+    end
+  end
+end

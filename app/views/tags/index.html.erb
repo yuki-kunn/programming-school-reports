@@ -1,0 +1,50 @@
+<% content_for :title, "タグ管理" %>
+
+<div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+  <div>
+    <h1 class="text-2xl font-bold text-slate-900">タグ管理</h1>
+    <p class="text-sm text-slate-500 mt-1">カテゴリタグを管理します</p>
+  </div>
+  <%= link_to "＋ 新規タグ作成", new_tag_path,
+      class: "inline-flex items-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors" %>
+</div>
+
+<% if @tags.any? %>
+  <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-slate-200 bg-slate-50">
+            <th class="text-left px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">名前</th>
+            <th class="text-left px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">紐付き生徒数</th>
+            <th class="px-6 py-3"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          <% @tags.each do |tag| %>
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-6 py-4 font-medium text-slate-900"><%= tag.name %></td>
+              <td class="px-6 py-4 text-slate-500"><%= tag.students.size %> 名</td>
+              <td class="px-6 py-4">
+                <div class="flex flex-wrap items-center justify-end gap-1">
+                  <%= link_to "編集", edit_tag_path(tag),
+                      class: "text-xs font-medium text-slate-600 hover:text-indigo-600 border border-slate-200 hover:border-indigo-300 rounded-md px-3 py-1.5 transition-colors" %>
+                  <%= button_to "削除", tag, method: :delete,
+                      class: "text-xs font-medium text-red-500 hover:text-red-700 border border-red-200 hover:border-red-400 rounded-md px-3 py-1.5 transition-colors cursor-pointer bg-transparent",
+                      data: { turbo_confirm: "#{tag.name} を削除しますか？" } %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% else %>
+  <div class="bg-white rounded-xl shadow-sm border border-slate-200 py-16 text-center">
+    <p class="text-4xl mb-4">🏷️</p>
+    <p class="text-slate-500 font-medium">まだタグが登録されていません</p>
+    <%= link_to "タグを作成する", new_tag_path,
+        class: "inline-flex mt-6 items-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors" %>
+  </div>
+<% end %>

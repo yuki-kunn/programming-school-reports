@@ -1,0 +1,23 @@
+<%= form_with(model: tag, local: true, class: "space-y-6") do |form| %>
+  <% if tag.errors.any? %>
+    <div class="rounded-lg px-4 py-3 bg-red-50 text-red-800 border border-red-200 text-sm">
+      <p class="font-medium mb-1">入力内容を確認してください</p>
+      <ul class="list-disc list-inside space-y-0.5">
+        <% tag.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, "タグ名", class: "block text-sm font-medium text-slate-700 mb-1.5" %>
+    <%= form.text_field :name,
+        placeholder: "例: Ruby, JavaScript, 初級",
+        class: "block w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" %>
+  </div>
+
+  <div class="flex justify-end">
+    <%= form.submit class: "inline-flex justify-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors cursor-pointer" %>
+  </div>
+<% end %>

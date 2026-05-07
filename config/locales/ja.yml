@@ -56,7 +56,10 @@ ja:
       user: ユーザー
       student: 生徒
       report: 日報
+      tag: タグ
     attributes:
+      tag:
+        name: タグ名
       user:
         name: 名前
         email: メールアドレス

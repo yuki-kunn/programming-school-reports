@@ -27,6 +27,10 @@
                     class: "px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors" %>
                 <%= link_to "生徒管理", students_path,
                     class: "px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors" %>
+                <% if current_user.admin? %>
+                  <%= link_to "タグ管理", tags_path,
+                      class: "px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors" %>
+                <% end %>
               </div>
             <% end %>
           </div>
@@ -62,6 +66,10 @@
                 class: "block px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors" %>
             <%= link_to "生徒管理", students_path,
                 class: "block px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors" %>
+            <% if current_user.admin? %>
+              <%= link_to "タグ管理", tags_path,
+                  class: "block px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors" %>
+            <% end %>
             <div class="pt-2 border-t border-slate-100">
               <%= button_to "ログアウト", session_path, method: :delete,
                   class: "w-full text-left px-3 py-2 rounded-md text-sm font-medium text-slate-500 hover:text-red-600 hover:bg-red-50 bg-transparent border-0 cursor-pointer transition-colors" %>

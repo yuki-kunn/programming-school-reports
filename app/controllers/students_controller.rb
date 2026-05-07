@@ -11,9 +11,11 @@ class StudentsController < ApplicationController
 
   def new
     @student = Student.new
+    @tags = Tag.order(:name)
   end
 
   def edit
+    @tags = Tag.order(:name)
   end
 
   def create
@@ -21,6 +23,7 @@ class StudentsController < ApplicationController
     if @student.save
       redirect_to @student, notice: "生徒を登録しました"
     else
+      @tags = Tag.order(:name)
       render :new, status: :unprocessable_entity
     end
   end
@@ -29,6 +32,7 @@ class StudentsController < ApplicationController
     if @student.update(student_params)
       redirect_to @student, notice: "生徒情報を更新しました"
     else
+      @tags = Tag.order(:name)
       render :edit, status: :unprocessable_entity
     end
   end
@@ -45,7 +49,7 @@ class StudentsController < ApplicationController
   end
 
   def student_params
-    params.require(:student).permit(:name, :admission_date, :enrollment_status, :memo)
+    params.require(:student).permit(:name, :admission_date, :enrollment_status, :memo, :tag_id)
   end
 
   def require_admin
