@@ -1,38 +1,32 @@
-# プログラミングスクール日報アプリ
+# 日報アプリ
 
-講師がプログラミングスクールの生徒ごとに学習日報を記録・管理するための Web アプリケーションです。
-
-## 技術スタック
-
-- **Ruby** 3.2.3
-- **Rails** 7.0.8
-- **PostgreSQL**
-- **Tailwind CSS**（Pinterest 風デザインシステム）
-- **Hotwire / Turbo**
+プログラミングスクール向けの日報管理 Web アプリケーションです。講師が生徒ごとの学習記録を作成・管理できます。
 
 ## 機能
 
-- ユーザー認証（登録・ログイン・ログアウト）
-- 日報の作成・閲覧・編集・削除（自分の日報のみ編集・削除可）
-- 生徒の管理（管理者のみ登録・編集・削除可）
-- 管理者 / 一般ユーザーのロール制御
+- **ユーザー認証**: アカウント登録・ログイン・ログアウト
+- **日報管理**: 生徒ごとの学習記録を作成・編集・削除
+- **生徒管理**: 生徒情報の登録・編集（管理者のみ）
+- **権限管理**: 一般ユーザー / 管理者の2段階ロール
 
-## ユーザーロール
+## 技術スタック
 
-| ロール | 説明 |
-|--------|------|
-| `general`（一般） | 日報の閲覧・自分の日報の作成・編集・削除 |
-| `admin`（管理者） | 上記に加え、生徒の登録・編集・削除 |
+| カテゴリ | 使用技術 |
+|---------|---------|
+| バックエンド | Ruby on Rails 7.0 |
+| フロントエンド | Tailwind CSS v3 / Turbo (Hotwire) |
+| データベース | PostgreSQL |
+| 認証 | has_secure_password (BCrypt) |
 
 ## セットアップ
 
 ### 必要環境
 
-- Ruby 3.2.3
+- Ruby 3.x
 - PostgreSQL
 - Node.js（Tailwind CSS ビルド用）
 
-### 手順
+### インストール手順
 
 ```bash
 # 依存 gem のインストール
@@ -41,38 +35,54 @@ bundle install
 # データベースの作成とマイグレーション
 bin/rails db:create db:migrate
 
-# シードデータの投入（開発用）
+# シードデータの投入（開発環境）
 bin/rails db:seed
 
 # 開発サーバーの起動
 bin/dev
 ```
 
-アプリは http://localhost:3000 で起動します。
+ブラウザで `http://localhost:3000` を開いてください。
 
-### シードデータのアカウント
+### 開発用アカウント
 
-`db:seed` 実行後、以下のアカウントでログインできます。
+シードデータ投入後、以下のアカウントが使用できます。
 
-| メールアドレス | パスワード | ロール |
-|----------------|------------|--------|
-| admin@example.com | password123 | 管理者 |
-| teacher@example.com | password123 | 一般 |
+| ロール | メールアドレス | パスワード |
+|--------|---------------|-----------|
+| 管理者 | admin@example.com | password123 |
+| 講師 | teacher@example.com | password123 |
 
-## テストの実行
+## 権限
 
-```bash
-bin/rails test
+| 機能 | 一般ユーザー | 管理者 |
+|------|------------|--------|
+| 日報の閲覧 | ✅ | ✅ |
+| 自分の日報を作成・編集・削除 | ✅ | ✅ |
+| 生徒一覧の閲覧 | ✅ | ✅ |
+| 生徒の登録・編集・削除 | ❌ | ✅ |
+
+## ディレクトリ構成
+
 ```
-
-## データベース構成
-
+app/
+├── controllers/
+│   ├── application_controller.rb  # 認証基底クラス
+│   ├── reports_controller.rb      # 日報 CRUD
+│   ├── students_controller.rb     # 生徒 CRUD（管理者保護あり）
+│   ├── sessions_controller.rb     # ログイン・ログアウト
+│   └── users_controller.rb        # アカウント登録
+├── models/
+│   ├── user.rb                    # ユーザー（role: general/admin）
+│   ├── student.rb                 # 生徒（enrollment_status enum）
+│   └── report.rb                  # 日報
+├── views/
+│   ├── layouts/application.html.erb  # 共通レイアウト・ナビゲーション
+│   ├── reports/                      # 日報ビュー
+│   ├── students/                     # 生徒ビュー
+│   ├── sessions/                     # ログイン
+│   └── users/                        # アカウント登録
+└── helpers/
+    ├── application_helper.rb      # flash_class ヘルパー
+    └── students_helper.rb         # 在籍状況ラベル・バッジクラス
 ```
-users       id, name, email, password_digest, role
-students    id, name, admission_date, enrollment_status, memo
-reports     id, learning_date, content, user_id, student_id
-```
-
-## 環境変数
-
-`config/credentials.yml.enc` で管理しています。`RAILS_MASTER_KEY` が必要です。

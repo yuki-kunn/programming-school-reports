@@ -8,3 +8,6 @@ yarn.lock linguist-generated
 
 # Mark any vendored files as having been vendored.
 vendor/* linguist-vendored
+
+# Keep shell scripts with LF line endings (prevent CRLF on Windows/WSL)
+bin/* text eol=lf

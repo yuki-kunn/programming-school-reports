@@ -1,10 +1,14 @@
 module ApplicationHelper
   def flash_class(type)
     case type.to_sym
-    when :notice then "bg-green-100 text-green-800"
-    when :success then "bg-green-100 text-green-800"
-    when :alert, :error then "bg-red-100 text-red-800"
-    else "bg-gray-100 text-gray-800"
+    when :notice, :success
+      "bg-emerald-50 text-emerald-800 border border-emerald-200"
+    when :alert, :error
+      "bg-red-50 text-red-800 border border-red-200"
+    when :warning
+      "bg-amber-50 text-amber-800 border border-amber-200"
+    else
+      "bg-slate-50 text-slate-800 border border-slate-200"
     end
   end
 end

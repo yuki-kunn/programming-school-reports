@@ -1,27 +1,58 @@
-<% content_for :title, "Reports" %>
+<% content_for :title, "日報一覧" %>
 
-<div class="w-full">
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-section-heading text-plum-black">日報一覧</h1>
-    <%= link_to "新規日報", new_report_path, class: "rounded-button px-3.5 py-2.5 bg-pinterest-red hover:bg-red-700 text-black block font-normal text-button" %>
+<div class="flex items-center justify-between mb-6">
+  <div>
+    <h1 class="text-2xl font-bold text-slate-900">日報一覧</h1>
+    <p class="text-sm text-slate-500 mt-1">学習の記録を管理します</p>
   </div>
+  <%= link_to "＋ 新規日報", new_report_path,
+      class: "inline-flex items-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors" %>
+</div>
 
-  <div id="reports" class="min-w-full divide-y divide-gray-200 space-y-5 mt-8">
-    <% if @reports.any? %>
+<% if @reports.any? %>
+  <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+    <div class="divide-y divide-slate-100">
       <% @reports.each do |report| %>
-        <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
-          <%= render report %>
-          <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
-            <%= link_to "詳細", report, class: "w-full sm:w-auto text-center rounded-button px-3.5 py-2.5 bg-sand-gray hover:bg-warm-light text-black inline-block font-normal text-button" %>
-            <% if current_user == report.user %>
-              <%= link_to "編集", edit_report_path(report), class: "w-full sm:w-auto text-center rounded-button px-3.5 py-2.5 bg-sand-gray hover:bg-warm-light text-black inline-block font-normal text-button" %>
-              <%= button_to "削除", report, method: :delete, class: "w-full sm:w-auto rounded-button px-3.5 py-2.5 text-black bg-error-red hover:bg-red-700 font-normal text-button cursor-pointer", data: { turbo_confirm: "本当に削除しますか？" } %>
-            <% end %>
+        <div class="px-6 py-4 hover:bg-slate-50 transition-colors">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-3 mb-1.5">
+                <span class="text-xs font-medium text-indigo-600 bg-indigo-50 rounded-full px-2.5 py-0.5">
+                  <%= report.learning_date.strftime("%Y年%-m月%-d日") %>
+                </span>
+                <span class="text-xs text-slate-500">
+                  <%= report.student.name %> の日報
+                </span>
+                <span class="text-xs text-slate-400">
+                  記入者: <%= report.user.name %>
+                </span>
+              </div>
+              <p class="text-sm text-slate-700 line-clamp-2">
+                <%= truncate(report.content, length: 120) %>
+              </p>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <%= link_to "詳細", report,
+                  class: "text-xs font-medium text-slate-600 hover:text-indigo-600 border border-slate-200 hover:border-indigo-300 rounded-md px-3 py-1.5 transition-colors" %>
+              <% if current_user == report.user %>
+                <%= link_to "編集", edit_report_path(report),
+                    class: "text-xs font-medium text-slate-600 hover:text-indigo-600 border border-slate-200 hover:border-indigo-300 rounded-md px-3 py-1.5 transition-colors" %>
+                <%= button_to "削除", report, method: :delete,
+                    class: "text-xs font-medium text-red-500 hover:text-red-700 border border-red-200 hover:border-red-400 rounded-md px-3 py-1.5 transition-colors cursor-pointer bg-transparent",
+                    data: { turbo_confirm: "この日報を削除しますか？" } %>
+              <% end %>
+            </div>
           </div>
         </div>
       <% end %>
-    <% else %>
-      <p class="text-center my-10 text-olive-gray text-body">日報はまだありません。</p>
-    <% end %>
+    </div>
   </div>
-</div>
+<% else %>
+  <div class="bg-white rounded-xl shadow-sm border border-slate-200 py-16 text-center">
+    <p class="text-4xl mb-4">📝</p>
+    <p class="text-slate-500 font-medium">まだ日報がありません</p>
+    <p class="text-sm text-slate-400 mt-1">最初の日報を作成しましょう</p>
+    <%= link_to "日報を作成する", new_report_path,
+        class: "inline-flex mt-6 items-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors" %>
+  </div>
+<% end %>

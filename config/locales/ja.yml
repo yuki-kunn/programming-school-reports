@@ -48,9 +48,6 @@ ja:
       - 10月
       - 11月
       - 12月
-  datetime:
-    formats:
-      default: "%Y年%-m月%-d日 %H時%M分%S秒"
   time:
     formats:
       default: "%Y年%-m月%-d日 %H:%M"
@@ -72,7 +69,7 @@ ja:
         memo: メモ
       report:
         learning_date: 学習日
-        content: 内容
+        content: 学習内容
         student_id: 生徒
   activemodel:
     errors:
@@ -81,3 +78,4 @@ ja:
         taken: はすでに使われています
         too_short: "は%{count}文字以上で入力してください"
         invalid: の形式が正しくありません
+        confirmation: とパスワードの入力が一致しません
