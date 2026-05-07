@@ -1,0 +1,10 @@
+<% if object.errors.any? %>
+  <div class="rounded-lg px-4 py-3 bg-red-50 text-red-800 border border-red-200 text-sm">
+    <p class="font-medium mb-1">入力内容を確認してください</p>
+    <ul class="list-disc list-inside space-y-0.5">
+      <% object.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

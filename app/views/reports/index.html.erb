@@ -1,13 +1,10 @@
 <% content_for :title, "日報一覧" %>
 
-<div class="flex flex-wrap items-center justify-between gap-3 mb-6">
-  <div>
-    <h1 class="text-2xl font-bold text-slate-900">日報一覧</h1>
-    <p class="text-sm text-slate-500 mt-1">学習の記録を管理します</p>
-  </div>
-  <%= link_to "＋ 新規日報", new_report_path,
-      class: "inline-flex items-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors" %>
-</div>
+<%= render "shared/page_header",
+    title: "日報一覧",
+    subtitle: "学習の記録を管理します",
+    action: link_to("＋ 新規日報", new_report_path,
+      class: "inline-flex items-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors") %>
 
 <%# タグフィルタータブ %>
 <div class="flex flex-wrap gap-2 mb-6">
@@ -65,11 +62,10 @@
     </div>
   </div>
 <% else %>
-  <div class="bg-white rounded-xl shadow-sm border border-slate-200 py-16 text-center">
-    <p class="text-4xl mb-4">📝</p>
-    <p class="text-slate-500 font-medium">まだ日報がありません</p>
-    <p class="text-sm text-slate-400 mt-1">最初の日報を作成しましょう</p>
-    <%= link_to "日報を作成する", new_report_path,
-        class: "inline-flex mt-6 items-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors" %>
-  </div>
+  <%= render "shared/empty_state",
+      icon: "📝",
+      message: "まだ日報がありません",
+      sub_message: "最初の日報を作成しましょう",
+      action: link_to("日報を作成する", new_report_path,
+        class: "inline-flex mt-6 items-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors") %>
 <% end %>

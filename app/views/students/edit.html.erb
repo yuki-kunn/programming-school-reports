@@ -1,9 +1,7 @@
 <% content_for :title, "生徒情報編集" %>
 
 <div class="max-w-2xl">
-  <div class="flex items-center gap-2 mb-6">
-    <%= link_to "← 詳細に戻る", @student, class: "text-sm text-slate-500 hover:text-indigo-600 transition-colors" %>
-  </div>
+  <%= render "shared/back_link", label: "← 詳細に戻る", url: @student %>
 
   <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-8">
     <h1 class="text-xl font-bold text-slate-900 mb-6">生徒情報の編集</h1>

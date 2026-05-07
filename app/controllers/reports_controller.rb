@@ -1,6 +1,7 @@
 class ReportsController < ApplicationController
   before_action :set_report, only: %i[show edit update destroy]
   before_action :ensure_correct_user, only: %i[edit update destroy]
+  before_action :load_students, only: %i[new edit create update]
 
   def index
     @tags = Tag.order(:name)
@@ -16,11 +17,9 @@ class ReportsController < ApplicationController
 
   def new
     @report = current_user.reports.build(learning_date: Date.current)
-    @students = Student.active_students.order(:name)
   end
 
   def edit
-    @students = Student.active_students.order(:name)
   end
 
   def create
@@ -28,7 +27,6 @@ class ReportsController < ApplicationController
     if @report.save
       redirect_to @report, notice: "日報を作成しました"
     else
-      @students = Student.active_students.order(:name)
       render :new, status: :unprocessable_entity
     end
   end
@@ -37,7 +35,6 @@ class ReportsController < ApplicationController
     if @report.update(report_params)
       redirect_to @report, notice: "日報を更新しました"
     else
-      @students = Student.active_students.order(:name)
       render :edit, status: :unprocessable_entity
     end
   end
@@ -62,5 +59,9 @@ class ReportsController < ApplicationController
 
   def report_params
     params.require(:report).permit(:learning_date, :content, :student_id)
+  end
+
+  def load_students
+    @students = Student.active_students.order(:name)
   end
 end

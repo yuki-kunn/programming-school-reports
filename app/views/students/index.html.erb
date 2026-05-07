@@ -1,15 +1,10 @@
 <% content_for :title, "生徒管理" %>
 
-<div class="flex flex-wrap items-center justify-between gap-3 mb-6">
-  <div>
-    <h1 class="text-2xl font-bold text-slate-900">生徒管理</h1>
-    <p class="text-sm text-slate-500 mt-1">在籍生徒の情報を管理します</p>
-  </div>
-  <% if current_user&.admin? %>
-    <%= link_to "＋ 新規生徒登録", new_student_path,
-        class: "inline-flex items-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors" %>
-  <% end %>
-</div>
+<%= render "shared/page_header",
+    title: "生徒管理",
+    subtitle: "在籍生徒の情報を管理します",
+    action: (current_user&.admin? ? link_to("＋ 新規生徒登録", new_student_path,
+      class: "inline-flex items-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors") : nil) %>
 
 <% if @students.any? %>
   <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
@@ -65,12 +60,9 @@
     </div>
   </div>
 <% else %>
-  <div class="bg-white rounded-xl shadow-sm border border-slate-200 py-16 text-center">
-    <p class="text-4xl mb-4">👤</p>
-    <p class="text-slate-500 font-medium">まだ生徒が登録されていません</p>
-    <% if current_user&.admin? %>
-      <%= link_to "生徒を登録する", new_student_path,
-          class: "inline-flex mt-6 items-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors" %>
-    <% end %>
-  </div>
+  <%= render "shared/empty_state",
+      icon: "👤",
+      message: "まだ生徒が登録されていません",
+      action: (current_user&.admin? ? link_to("生徒を登録する", new_student_path,
+        class: "inline-flex mt-6 items-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors") : nil) %>
 <% end %>

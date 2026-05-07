@@ -10,16 +10,9 @@
     </div>
 
     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
-      <% if @user.errors.any? %>
-        <div class="mb-6 rounded-lg px-4 py-3 bg-red-50 text-red-800 border border-red-200 text-sm">
-          <p class="font-medium mb-1">入力内容を確認してください</p>
-          <ul class="list-disc list-inside space-y-0.5">
-            <% @user.errors.full_messages.each do |msg| %>
-              <li><%= msg %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
+      <div class="mb-6">
+        <%= render "shared/form_errors", object: @user %>
+      </div>
 
       <%= form_with(model: @user, local: true, class: "space-y-5") do |form| %>
 

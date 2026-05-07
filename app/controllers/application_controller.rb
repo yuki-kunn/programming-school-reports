@@ -18,4 +18,11 @@ class ApplicationController < ActionController::Base
       redirect_to new_session_path
     end
   end
+
+  def require_admin
+    unless current_user&.admin?
+      flash[:alert] = "管理者権限が必要です"
+      redirect_to root_path
+    end
+  end
 end

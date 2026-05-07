@@ -1,0 +1,10 @@
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 py-16 text-center">
+  <p class="text-4xl mb-4"><%= icon %></p>
+  <p class="text-slate-500 font-medium"><%= message %></p>
+  <% if local_assigns[:sub_message] %>
+    <p class="text-sm text-slate-400 mt-1"><%= sub_message %></p>
+  <% end %>
+  <% if local_assigns[:action] %>
+    <%= action %>
+  <% end %>
+</div>

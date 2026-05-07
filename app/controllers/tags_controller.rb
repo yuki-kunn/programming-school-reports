@@ -44,11 +44,4 @@ class TagsController < ApplicationController
   def tag_params
     params.require(:tag).permit(:name)
   end
-
-  def require_admin
-    unless current_user&.admin?
-      flash[:alert] = "管理者権限が必要です"
-      redirect_to root_path
-    end
-  end
 end
