@@ -49,7 +49,7 @@ class ReportsController < ApplicationController
   end
 
   def ensure_correct_user
-    unless @report.user == current_user
+    unless @report.user == current_user || current_user.admin?
       flash[:alert] = "権限がありません"
       redirect_to reports_path
     end
