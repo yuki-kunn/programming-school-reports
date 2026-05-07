@@ -1,53 +1,69 @@
-<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-    <h2 class="mt-10 text-center text-section-heading font-semibold leading-9 tracking-tight text-plum-black">アカウント登録</h2>
-  </div>
+<% content_for :title, "アカウント登録" %>
 
-  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <%= form_with(model: @user, local: true, class: "space-y-6") do |form| %>
+<div class="min-h-[70vh] flex items-center justify-center py-12">
+  <div class="w-full max-w-md">
+
+    <div class="text-center mb-8">
+      <span class="text-5xl">📋</span>
+      <h1 class="mt-4 text-2xl font-bold text-slate-900">アカウント登録</h1>
+      <p class="mt-2 text-sm text-slate-500">新しいアカウントを作成します</p>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
       <% if @user.errors.any? %>
-        <div class="bg-error-red text-white px-3 py-2 font-medium rounded-button mt-3">
-          <% @user.errors.full_messages.each do |message| %>
-            <p><%= message %></p>
-          <% end %>
+        <div class="mb-6 rounded-lg px-4 py-3 bg-red-50 text-red-800 border border-red-200 text-sm">
+          <p class="font-medium mb-1">入力内容を確認してください</p>
+          <ul class="list-disc list-inside space-y-0.5">
+            <% @user.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
         </div>
       <% end %>
 
-      <div>
-        <%= form.label :name, "名前", class: "block text-caption-bold leading-6 text-plum-black" %>
-        <div class="mt-2">
-          <%= form.text_field :name, class: "block w-full rounded-button border border-warm-silver py-2.5 px-3.5 text-plum-black shadow-sm focus:border-focus-blue focus:ring-focus-blue sm:text-body" %>
+      <%= form_with(model: @user, local: true, class: "space-y-5") do |form| %>
+
+        <div>
+          <%= form.label :name, "名前", class: "block text-sm font-medium text-slate-700 mb-1.5" %>
+          <%= form.text_field :name,
+              placeholder: "山田 太郎",
+              autocomplete: "name",
+              class: "block w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" %>
         </div>
-      </div>
 
-      <div>
-        <%= form.label :email, "メールアドレス", class: "block text-caption-bold leading-6 text-plum-black" %>
-        <div class="mt-2">
-          <%= form.email_field :email, class: "block w-full rounded-button border border-warm-silver py-2.5 px-3.5 text-plum-black shadow-sm focus:border-focus-blue focus:ring-focus-blue sm:text-body" %>
+        <div>
+          <%= form.label :email, "メールアドレス", class: "block text-sm font-medium text-slate-700 mb-1.5" %>
+          <%= form.email_field :email,
+              placeholder: "example@email.com",
+              autocomplete: "email",
+              class: "block w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" %>
         </div>
-      </div>
 
-      <div>
-        <%= form.label :password, "パスワード", class: "block text-caption-bold leading-6 text-plum-black" %>
-        <div class="mt-2">
-          <%= form.password_field :password, class: "block w-full rounded-button border border-warm-silver py-2.5 px-3.5 text-plum-black shadow-sm focus:border-focus-blue focus:ring-focus-blue sm:text-body" %>
+        <div>
+          <%= form.label :password, "パスワード", class: "block text-sm font-medium text-slate-700 mb-1.5" %>
+          <p class="text-xs text-slate-400 mb-1.5">8文字以上</p>
+          <%= form.password_field :password,
+              autocomplete: "new-password",
+              class: "block w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" %>
         </div>
-      </div>
 
-      <div>
-        <%= form.label :password_confirmation, "パスワード確認", class: "block text-caption-bold leading-6 text-plum-black" %>
-        <div class="mt-2">
-          <%= form.password_field :password_confirmation, class: "block w-full rounded-button border border-warm-silver py-2.5 px-3.5 text-plum-black shadow-sm focus:border-focus-blue focus:ring-focus-blue sm:text-body" %>
+        <div>
+          <%= form.label :password_confirmation, "パスワード確認", class: "block text-sm font-medium text-slate-700 mb-1.5" %>
+          <%= form.password_field :password_confirmation,
+              autocomplete: "new-password",
+              class: "block w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" %>
         </div>
-      </div>
 
-      <div>
-        <%= form.submit "登録する", class: "flex w-full justify-center rounded-button bg-pinterest-red py-1.5 px-3.5 text-body font-normal leading-6 text-black shadow-sm hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pinterest-red" %>
-      </div>
-    <% end %>
+        <%= form.submit "登録する",
+            class: "w-full flex justify-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors cursor-pointer mt-2" %>
 
-    <p class="mt-6 text-center text-caption text-olive-gray">
-      すでにアカウントをお持ちですか？ <%= link_to "ログインはこちら", new_session_path, class: "text-link-blue hover:underline text-caption" %>
+      <% end %>
+    </div>
+
+    <p class="mt-6 text-center text-sm text-slate-500">
+      すでにアカウントをお持ちの方は
+      <%= link_to "ログインはこちら", new_session_path, class: "font-medium text-indigo-600 hover:text-indigo-700 hover:underline" %>
     </p>
+
   </div>
 </div>

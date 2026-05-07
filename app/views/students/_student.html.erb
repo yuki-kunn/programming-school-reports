@@ -1,14 +1,11 @@
-<div id="<%= dom_id student %>" class="w-full sm:w-auto my-5 p-4 bg-white rounded-comfortable">
-  <div class="flex items-center">
-    <p class="text-body font-semibold text-plum-black mr-2"><%= student.name %></p>
-    <span class="<%= student_status_class(student.enrollment_status) %> text-caption font-medium px-2.5 py-0.5 rounded-circle">
-      <%= student.enrollment_status.humanize %>
+<div id="<%= dom_id student %>">
+  <div class="flex items-center gap-2">
+    <span class="font-medium text-slate-900"><%= student.name %></span>
+    <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium <%= enrollment_status_badge_class(student.enrollment_status) %>">
+      <%= enrollment_status_label(student.enrollment_status) %>
     </span>
   </div>
   <% if student.admission_date.present? %>
-    <p class="text-caption text-olive-gray">入学日: <%= l student.admission_date %></p>
-  <% end %>
-  <% if student.memo.present? %>
-    <p class="text-caption text-plum-black"><%= student.memo %></p>
+    <p class="text-xs text-slate-400 mt-0.5">入学日: <%= student.admission_date.strftime("%Y年%-m月%-d日") %></p>
   <% end %>
 </div>
