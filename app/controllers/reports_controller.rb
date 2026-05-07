@@ -4,7 +4,7 @@ class ReportsController < ApplicationController
 
   def index
     @tags = Tag.order(:name)
-    @current_tag = Tag.find_by(id: params[:tag_id])
+    @current_tag = params[:tag_id].present? ? Tag.find_by(id: params[:tag_id]) : nil
     @reports = Report.includes(:user, :student).order(learning_date: :desc)
     if @current_tag
       @reports = @reports.joins(:student).where(students: { tag_id: @current_tag.id })
