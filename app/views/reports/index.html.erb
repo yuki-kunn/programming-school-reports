@@ -1,6 +1,6 @@
 <% content_for :title, "日報一覧" %>
 
-<div class="flex items-center justify-between mb-6">
+<div class="flex flex-wrap items-center justify-between gap-3 mb-6">
   <div>
     <h1 class="text-2xl font-bold text-slate-900">日報一覧</h1>
     <p class="text-sm text-slate-500 mt-1">学習の記録を管理します</p>
@@ -14,9 +14,9 @@
     <div class="divide-y divide-slate-100">
       <% @reports.each do |report| %>
         <div class="px-6 py-4 hover:bg-slate-50 transition-colors">
-          <div class="flex items-start justify-between gap-4">
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
             <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-3 mb-1.5">
+              <div class="flex flex-wrap items-center gap-2 mb-1.5">
                 <span class="text-xs font-medium text-indigo-600 bg-indigo-50 rounded-full px-2.5 py-0.5">
                   <%= report.learning_date.strftime("%Y年%-m月%-d日") %>
                 </span>
@@ -31,7 +31,7 @@
                 <%= truncate(report.content, length: 120) %>
               </p>
             </div>
-            <div class="flex items-center gap-2 shrink-0">
+            <div class="flex flex-wrap items-center gap-1">
               <%= link_to "詳細", report,
                   class: "text-xs font-medium text-slate-600 hover:text-indigo-600 border border-slate-200 hover:border-indigo-300 rounded-md px-3 py-1.5 transition-colors" %>
               <% if current_user == report.user || current_user.admin? %>

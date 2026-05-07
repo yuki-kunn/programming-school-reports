@@ -5,7 +5,7 @@
     <%= link_to "← 日報一覧", reports_path, class: "text-sm text-slate-500 hover:text-indigo-600 transition-colors" %>
   </div>
 
-  <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+  <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-8">
     <h1 class="text-xl font-bold text-slate-900 mb-6">新規日報の作成</h1>
     <%= render "form", report: @report %>
   </div>

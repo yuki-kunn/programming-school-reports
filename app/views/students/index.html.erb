@@ -1,6 +1,6 @@
 <% content_for :title, "生徒管理" %>
 
-<div class="flex items-center justify-between mb-6">
+<div class="flex flex-wrap items-center justify-between gap-3 mb-6">
   <div>
     <h1 class="text-2xl font-bold text-slate-900">生徒管理</h1>
     <p class="text-sm text-slate-500 mt-1">在籍生徒の情報を管理します</p>
@@ -13,12 +13,13 @@
 
 <% if @students.any? %>
   <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+    <div class="overflow-x-auto">
     <table class="w-full text-sm">
       <thead>
         <tr class="border-b border-slate-200 bg-slate-50">
           <th class="text-left px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">名前</th>
           <th class="text-left px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">在籍状況</th>
-          <th class="text-left px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">入学日</th>
+          <th class="hidden sm:table-cell text-left px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">入学日</th>
           <th class="px-6 py-3"></th>
         </tr>
       </thead>
@@ -31,11 +32,11 @@
                 <%= enrollment_status_label(student.enrollment_status) %>
               </span>
             </td>
-            <td class="px-6 py-4 text-slate-500">
+            <td class="hidden sm:table-cell px-6 py-4 text-slate-500">
               <%= student.admission_date&.strftime("%Y年%-m月%-d日") || "—" %>
             </td>
             <td class="px-6 py-4">
-              <div class="flex items-center justify-end gap-2">
+              <div class="flex flex-wrap items-center justify-end gap-1">
                 <%= link_to "詳細", student,
                     class: "text-xs font-medium text-slate-600 hover:text-indigo-600 border border-slate-200 hover:border-indigo-300 rounded-md px-3 py-1.5 transition-colors" %>
                 <% if current_user&.admin? %>
@@ -51,6 +52,7 @@
         <% end %>
       </tbody>
     </table>
+    </div>
   </div>
 <% else %>
   <div class="bg-white rounded-xl shadow-sm border border-slate-200 py-16 text-center">

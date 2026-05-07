@@ -6,8 +6,8 @@
         class: "text-sm text-slate-500 hover:text-indigo-600 transition-colors" %>
   </div>
 
-  <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
-    <div class="flex items-start justify-between mb-6">
+  <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-8">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between mb-6">
       <div class="flex items-center gap-4">
         <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 text-xl font-bold">
           <%= @student.name.chars.first %>
@@ -20,7 +20,7 @@
         </div>
       </div>
       <% if current_user&.admin? %>
-        <div class="flex items-center gap-2">
+        <div class="flex flex-wrap items-center gap-2">
           <%= link_to "編集", edit_student_path(@student),
               class: "text-sm font-medium text-slate-600 hover:text-indigo-600 border border-slate-200 hover:border-indigo-300 rounded-lg px-3 py-1.5 transition-colors" %>
           <%= button_to "削除", @student, method: :delete,
