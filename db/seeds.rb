@@ -9,6 +9,13 @@ admin = User.find_or_create_by!(email: 'admin@example.com') do |u|
   u.role = :admin
 end
 
+# 本番管理者ユーザー（hokuyoyuki@gmail.com）
+yuki_admin = User.find_or_initialize_by(email: 'hokuyoyuki@gmail.com')
+yuki_admin.name = '管理者' if yuki_admin.name.blank?
+yuki_admin.password = ENV.fetch('YUKI_ADMIN_PASSWORD', 'ChangeMe2025!') if yuki_admin.new_record?
+yuki_admin.role = :admin
+yuki_admin.save!
+
 teacher = User.find_or_create_by!(email: 'teacher@example.com') do |u|
   u.name = '鈴木 先生'
   u.password = 'password123'
@@ -39,3 +46,4 @@ end
 puts "シードデータを作成しました"
 puts "管理者: admin@example.com / password123"
 puts "講師:   teacher@example.com / password123"
+puts "本番管理者: hokuyoyuki@gmail.com (既存の場合はroleをadminに昇格)"
