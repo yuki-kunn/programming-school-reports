@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: programming_school_reports_production
-  username: programming_school_reports
-  password: <%= ENV['PROGRAMMING_SCHOOL_REPORTS_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
