@@ -1,0 +1,25 @@
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+  <div class="px-4 sm:px-8 py-4 border-b border-slate-100">
+    <h2 class="text-base font-semibold text-slate-700">最近の日報 <span class="text-slate-400 font-normal text-sm">（最大20件）</span></h2>
+  </div>
+
+  <% if reports.any? %>
+    <div class="divide-y divide-slate-100">
+      <% reports.each do |report| %>
+        <div class="px-4 sm:px-8 py-4 hover:bg-slate-50 transition-colors">
+          <div class="flex flex-wrap items-center gap-2 mb-1.5">
+            <span class="text-xs font-medium text-indigo-600 bg-indigo-50 rounded-full px-2.5 py-0.5">
+              <%= japanese_date(report.learning_date) %>
+            </span>
+            <span class="text-xs text-slate-500"><%= report.student.name %> の日報</span>
+          </div>
+          <p class="text-sm text-slate-700"><%= truncate(report.content, length: 160) %></p>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <%= render "shared/empty_state",
+        icon: "📝",
+        message: "まだ日報がありません" %>
+  <% end %>
+</div>

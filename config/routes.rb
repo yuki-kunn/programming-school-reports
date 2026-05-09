@@ -6,7 +6,13 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create]
   resources :tags
 
-  # Chrome DevTools の自動リクエストを黙って処理（ログエラー抑制）
-  get '/.well-known/appspecific/com.chrome.devtools.json',
-      to: proc { [200, { 'Content-Type' => 'application/json' }, ['{}']].freeze }
+  namespace :admin do
+    resources :users, only: [:index, :show, :update]
+  end
+
+  # Chrome DevTools の自動リクエストを黙って処理（開発環境のみ）
+  if Rails.env.development?
+    get '/.well-known/appspecific/com.chrome.devtools.json',
+        to: proc { [200, { 'Content-Type' => 'application/json' }, ['{}']].freeze }
+  end
 end

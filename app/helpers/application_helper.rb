@@ -11,4 +11,8 @@ module ApplicationHelper
       "bg-slate-50 text-slate-800 border border-slate-200"
     end
   end
+
+  def japanese_date(date)
+    date.strftime("%Y年%-m月%-d日")
+  end
 end

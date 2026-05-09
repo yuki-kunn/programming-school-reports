@@ -1,0 +1,64 @@
+<% content_for :title, @user.name %>
+
+<div class="max-w-3xl">
+  <%= render "shared/back_link", label: "← 講師一覧", url: admin_users_path %>
+
+  <%= render "shared/page_header",
+      title: @user.name,
+      subtitle: @user.email %>
+
+  <%# ユーザー情報カード %>
+  <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-8 mb-6">
+    <h2 class="text-base font-semibold text-slate-700 mb-4">ユーザー情報</h2>
+    <dl class="divide-y divide-slate-100">
+      <div class="flex gap-4 py-3">
+        <dt class="w-32 shrink-0 text-sm font-medium text-slate-500">名前</dt>
+        <dd class="text-sm text-slate-900 font-medium"><%= @user.name %></dd>
+      </div>
+      <div class="flex gap-4 py-3">
+        <dt class="w-32 shrink-0 text-sm font-medium text-slate-500">メールアドレス</dt>
+        <dd class="text-sm text-slate-900"><%= @user.email %></dd>
+      </div>
+      <div class="flex gap-4 py-3">
+        <dt class="w-32 shrink-0 text-sm font-medium text-slate-500">権限</dt>
+        <dd><%= user_role_badge(@user) %></dd>
+      </div>
+      <div class="flex gap-4 py-3">
+        <dt class="w-32 shrink-0 text-sm font-medium text-slate-500">登録日</dt>
+        <dd class="text-sm text-slate-900"><%= japanese_date(@user.created_at) %></dd>
+      </div>
+    </dl>
+  </div>
+
+  <%# 権限変更カード %>
+  <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-8 mb-6">
+    <h2 class="text-base font-semibold text-slate-700 mb-1">権限の変更</h2>
+    <p class="text-sm text-slate-500 mb-4">このユーザーの管理者権限を変更します</p>
+
+    <% if @user == current_user %>
+      <div class="flex items-center gap-2 rounded-lg bg-slate-50 border border-slate-200 px-4 py-3">
+        <span class="text-slate-400 text-sm">⚠</span>
+        <p class="text-sm text-slate-500">自分自身の権限は変更できません</p>
+      </div>
+    <% elsif @user.admin? %>
+      <%= button_to admin_user_path(@user),
+          method: :patch,
+          params: { user: { role: "general" } },
+          class: "inline-flex items-center rounded-lg border border-slate-200 hover:border-red-300 bg-white hover:bg-red-50 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:text-red-600 shadow-sm transition-colors cursor-pointer",
+          data: { turbo_confirm: "#{h(@user.name)} の権限を「一般」に変更しますか？" } do %>
+        管理者権限を取り消す
+      <% end %>
+    <% else %>
+      <%= button_to admin_user_path(@user),
+          method: :patch,
+          params: { user: { role: "admin" } },
+          class: "inline-flex items-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors cursor-pointer",
+          data: { turbo_confirm: "#{h(@user.name)} を管理者に昇格しますか？" } do %>
+        管理者に昇格する
+      <% end %>
+    <% end %>
+  </div>
+
+  <%# 最近の日報 %>
+  <%= render "recent_reports", reports: @reports %>
+</div>
