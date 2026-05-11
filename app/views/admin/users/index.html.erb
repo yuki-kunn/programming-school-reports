@@ -2,7 +2,9 @@
 
 <%= render "shared/page_header",
     title: "講師管理",
-    subtitle: "ユーザーの一覧と権限管理" %>
+    subtitle: "ユーザーの一覧と権限管理",
+    action: link_to("＋ ユーザー追加", new_admin_user_path,
+      class: "inline-flex items-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors") %>
 
 <% if @users.any? %>
   <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
@@ -39,6 +41,7 @@
       </table>
     </div>
   </div>
+  <%= paginate @users %>
 <% else %>
   <%= render "shared/empty_state",
       icon: "👥",

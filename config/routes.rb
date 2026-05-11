@@ -3,11 +3,10 @@ Rails.application.routes.draw do
   resources :reports
   resources :students
   resource :session, only: [:new, :create, :destroy]
-  resources :users, only: [:new, :create]
   resources :tags
 
   namespace :admin do
-    resources :users, only: [:index, :show, :update]
+    resources :users, only: [:index, :show, :new, :create, :update]
   end
 
   # Chrome DevTools の自動リクエストを黙って処理（開発環境のみ）

@@ -4,7 +4,7 @@ class StudentsController < ApplicationController
   before_action :load_tags, only: %i[new edit create update]
 
   def index
-    @students = Student.all.order(:name)
+    @students = Student.order(:name).page(params[:page]).per(20)
   end
 
   def show

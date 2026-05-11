@@ -38,7 +38,7 @@
               <% end %>
             </td>
             <td class="hidden sm:table-cell px-6 py-4 text-slate-500">
-              <%= student.admission_date&.strftime("%Y年%-m月%-d日") || "—" %>
+              <%= japanese_date(student.admission_date) %>
             </td>
             <td class="px-6 py-4">
               <div class="flex flex-wrap items-center justify-end gap-1">
@@ -59,6 +59,7 @@
     </table>
     </div>
   </div>
+  <%= paginate @students %>
 <% else %>
   <%= render "shared/empty_state",
       icon: "👤",

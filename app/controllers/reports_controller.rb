@@ -10,6 +10,7 @@ class ReportsController < ApplicationController
     if @current_tag
       @reports = @reports.joins(:student).where(students: { tag_id: @current_tag.id })
     end
+    @reports = @reports.page(params[:page]).per(20)
   end
 
   def show

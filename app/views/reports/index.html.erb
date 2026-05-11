@@ -19,7 +19,7 @@
 <% if @current_tag %>
   <p class="text-sm text-slate-500 mb-4">
     <span class="font-medium text-slate-700"><%= @current_tag.name %></span> の日報
-    <span class="ml-1 text-slate-400">(<%= @reports.count %>件)</span>
+    <span class="ml-1 text-slate-400">(<%= @reports.total_count %>件)</span>
   </p>
 <% end %>
 
@@ -32,7 +32,7 @@
             <div class="flex-1 min-w-0">
               <div class="flex flex-wrap items-center gap-2 mb-1.5">
                 <span class="text-xs font-medium text-indigo-600 bg-indigo-50 rounded-full px-2.5 py-0.5">
-                  <%= report.learning_date.strftime("%Y年%-m月%-d日") %>
+                  <%= japanese_date(report.learning_date) %>
                 </span>
                 <span class="text-xs text-slate-500">
                   <%= report.student.name %> の日報
@@ -61,6 +61,7 @@
       <% end %>
     </div>
   </div>
+  <%= paginate @reports %>
 <% else %>
   <%= render "shared/empty_state",
       icon: "📝",

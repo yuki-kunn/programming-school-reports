@@ -1,0 +1,47 @@
+<%= form_with(model: [:admin, user], local: true, class: "space-y-5") do |form| %>
+  <%= render "shared/form_errors", object: user %>
+
+  <div>
+    <%= form.label :name, "名前", class: "block text-sm font-medium text-slate-700 mb-1.5" %>
+    <%= form.text_field :name,
+        placeholder: "山田 太郎",
+        autocomplete: "off",
+        class: "block w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" %>
+  </div>
+
+  <div>
+    <%= form.label :email, "メールアドレス", class: "block text-sm font-medium text-slate-700 mb-1.5" %>
+    <%= form.email_field :email,
+        placeholder: "example@email.com",
+        autocomplete: "off",
+        class: "block w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" %>
+  </div>
+
+  <div>
+    <%= form.label :password, "初期パスワード", class: "block text-sm font-medium text-slate-700 mb-1.5" %>
+    <p class="text-xs text-slate-400 mb-1.5">8文字以上で設定してください</p>
+    <%= form.password_field :password,
+        autocomplete: "new-password",
+        class: "block w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" %>
+  </div>
+
+  <div>
+    <%= form.label :password_confirmation, "パスワード確認", class: "block text-sm font-medium text-slate-700 mb-1.5" %>
+    <%= form.password_field :password_confirmation,
+        autocomplete: "new-password",
+        class: "block w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" %>
+  </div>
+
+  <div>
+    <%= form.label :role, "権限", class: "block text-sm font-medium text-slate-700 mb-1.5" %>
+    <%= form.select :role,
+        [["一般（講師）", "general"], ["管理者", "admin"]],
+        { selected: user.role || "general" },
+        class: "block w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" %>
+  </div>
+
+  <div class="flex justify-end pt-2">
+    <%= form.submit "アカウントを作成する",
+        class: "inline-flex justify-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors cursor-pointer" %>
+  </div>
+<% end %>

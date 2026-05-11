@@ -1,0 +1,11 @@
+<% content_for :title, "ユーザー追加" %>
+
+<div class="max-w-2xl">
+  <%= render "shared/back_link", label: "← 講師一覧", url: admin_users_path %>
+
+  <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-8">
+    <h1 class="text-xl font-bold text-slate-900 mb-6">新規ユーザーの追加</h1>
+
+    <%= render "form", user: @user %>
+  </div>
+</div>
