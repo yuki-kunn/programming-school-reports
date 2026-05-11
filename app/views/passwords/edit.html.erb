@@ -1,0 +1,61 @@
+<% content_for :title, "パスワード変更" %>
+
+<div class="max-w-lg mx-auto">
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-slate-900">パスワード変更</h1>
+    <p class="mt-1 text-sm text-slate-500">アカウントのパスワードを変更します</p>
+  </div>
+
+  <% if current_user.force_password_change? %>
+    <div class="mb-6 rounded-lg bg-amber-50 border border-amber-200 px-4 py-3 flex gap-3">
+      <span class="text-amber-500 mt-0.5">⚠️</span>
+      <p class="text-sm text-amber-800">管理者にアカウントを発行されました。セキュリティのため、パスワードを変更してください。</p>
+    </div>
+  <% end %>
+
+  <% if current_user.errors.any? %>
+    <div class="mb-6 rounded-lg bg-red-50 border border-red-200 px-4 py-3">
+      <p class="text-sm font-medium text-red-800 mb-2">以下のエラーを修正してください：</p>
+      <ul class="list-disc list-inside space-y-1">
+        <% current_user.errors.full_messages.each do |msg| %>
+          <li class="text-sm text-red-700"><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+    <%= form_with url: password_path, method: :patch, local: true do |f| %>
+      <div class="space-y-5">
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1" for="current_password">現在のパスワード</label>
+          <input type="password" name="password_change[current_password]" id="current_password" autocomplete="current-password"
+                 class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1" for="new_password">新しいパスワード</label>
+          <input type="password" name="password_change[password]" id="new_password" autocomplete="new-password"
+                 class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none">
+          <p class="mt-1 text-xs text-slate-500">8文字以上で入力してください</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1" for="new_password_confirmation">新しいパスワード（確認）</label>
+          <input type="password" name="password_change[password_confirmation]" id="new_password_confirmation" autocomplete="new-password"
+                 class="block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none">
+        </div>
+      </div>
+
+      <div class="mt-6 flex items-center gap-3">
+        <button type="submit"
+                class="inline-flex items-center px-5 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors">
+          パスワードを変更する
+        </button>
+        <% unless current_user.force_password_change? %>
+          <%= link_to "キャンセル", root_path, class: "text-sm text-slate-500 hover:text-slate-700" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

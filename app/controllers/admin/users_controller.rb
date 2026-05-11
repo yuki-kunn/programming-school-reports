@@ -16,6 +16,7 @@ class Admin::UsersController < ApplicationController
 
   def create
     @user = User.new(create_user_params)
+    @user.force_password_change = true
     if @user.save
       flash[:notice] = "#{@user.name} のアカウントを作成しました"
       redirect_to admin_users_path

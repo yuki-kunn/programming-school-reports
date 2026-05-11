@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :reports
   resources :students
   resource :session, only: [:new, :create, :destroy]
+  resource :password, only: [:edit, :update]
   resources :tags
 
   namespace :admin do
