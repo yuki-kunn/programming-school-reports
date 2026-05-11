@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :require_admin
-  before_action :set_user, only: [:show, :update]
+  before_action :set_user, only: [:show, :update, :destroy]
 
   def index
     @users = User.order(role: :desc, name: :asc).page(params[:page]).per(20)
@@ -47,6 +47,23 @@ class Admin::UsersController < ApplicationController
       flash[:alert] = @user.errors.full_messages.to_sentence
     end
 
+    redirect_to admin_users_path
+  end
+
+  def destroy
+    if @user == current_user
+      flash[:alert] = "自分自身のアカウントは削除できません"
+      return redirect_to admin_users_path
+    end
+
+    if @user.admin? && User.where(role: :admin).count == 1
+      flash[:alert] = "最後の管理者は削除できません"
+      return redirect_to admin_user_path(@user)
+    end
+
+    user_name = @user.name
+    @user.destroy
+    flash[:notice] = "#{user_name} のアカウントを削除しました"
     redirect_to admin_users_path
   end
 

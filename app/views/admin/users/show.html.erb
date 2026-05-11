@@ -61,4 +61,27 @@
 
   <%# 最近の日報 %>
   <%= render "recent_reports", reports: @reports %>
+
+  <%# アカウント削除カード %>
+  <% unless @user == current_user %>
+    <div class="bg-white rounded-xl shadow-sm border border-red-200 p-4 sm:p-8 mt-6">
+      <h2 class="text-base font-semibold text-red-700 mb-1">アカウントの削除</h2>
+      <p class="text-sm text-slate-500 mb-4">
+        このユーザーのアカウントを完全に削除します。関連する日報もすべて削除されます。この操作は取り消せません。
+      </p>
+      <% if @user.admin? && User.where(role: :admin).count == 1 %>
+        <div class="flex items-center gap-2 rounded-lg bg-slate-50 border border-slate-200 px-4 py-3">
+          <span class="text-slate-400 text-sm">⚠</span>
+          <p class="text-sm text-slate-500">最後の管理者のため削除できません</p>
+        </div>
+      <% else %>
+        <%= button_to admin_user_path(@user),
+            method: :delete,
+            class: "inline-flex items-center rounded-lg bg-red-600 hover:bg-red-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors cursor-pointer",
+            data: { turbo_confirm: "#{h(@user.name)} のアカウントを完全に削除しますか？\n関連する日報もすべて削除されます。" } do %>
+          アカウントを削除する
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
 </div>

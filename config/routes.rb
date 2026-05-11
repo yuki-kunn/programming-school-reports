@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :tags
 
   namespace :admin do
-    resources :users, only: [:index, :show, :new, :create, :update]
+    resources :users, only: [:index, :show, :new, :create, :update, :destroy]
   end
 
   # Chrome DevTools の自動リクエストを黙って処理（開発環境のみ）
