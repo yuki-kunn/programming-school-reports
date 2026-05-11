@@ -6,7 +6,8 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:session][:email].downcase)
-    if user && user.authenticate(params[:session][:password])
+    if user&.authenticate(params[:session][:password])
+      reset_session                    # セッション固定攻撃対策
       session[:user_id] = user.id
       flash[:notice] = "ログインしました"
       redirect_to root_path
@@ -17,7 +18,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session.delete(:user_id)
+    reset_session                      # セッション全体を無効化
     flash[:notice] = "ログアウトしました"
     redirect_to new_session_path
   end

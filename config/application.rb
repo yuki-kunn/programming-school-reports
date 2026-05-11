@@ -12,6 +12,14 @@ module ProgrammingSchoolReports
     config.load_defaults 7.0
     config.i18n.default_locale = :ja
 
+    # セッションCookieのセキュリティ設定
+    config.session_store :cookie_store,
+      key: '_ipo_reports_session',
+      secure: Rails.env.production?,
+      httponly: true,
+      same_site: :lax,
+      expire_after: 8.hours
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

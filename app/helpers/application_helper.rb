@@ -12,7 +12,9 @@ module ApplicationHelper
     end
   end
 
+  # nil-safe: nilの場合は "—" を返す
   def japanese_date(date)
+    return "—" if date.nil?
     date.strftime("%Y年%-m月%-d日")
   end
 end

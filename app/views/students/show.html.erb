@@ -7,7 +7,7 @@
     <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between mb-6">
       <div class="flex items-center gap-4">
         <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 text-xl font-bold">
-          <%= @student.name.chars.first %>
+          <%= @student.name&.chars&.first || "?" %>
         </div>
         <div>
           <h1 class="text-xl font-bold text-slate-900"><%= @student.name %></h1>
@@ -41,7 +41,7 @@
       <div class="flex gap-4 py-4">
         <dt class="w-32 shrink-0 text-sm font-medium text-slate-500">入学日</dt>
         <dd class="text-sm text-slate-900">
-          <%= @student.admission_date&.strftime("%Y年%-m月%-d日") || "未設定" %>
+          <%= @student.admission_date.present? ? japanese_date(@student.admission_date) : "未設定" %>
         </dd>
       </div>
       <% if @student.memo.present? %>

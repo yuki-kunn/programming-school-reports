@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_action :require_login
+  skip_before_action :require_login, only: %i[new create]
 
   def new
     @user = User.new
@@ -8,8 +8,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      reset_session                    # セッション固定攻撃対策
       session[:user_id] = @user.id
-      flash[:notice] = "アカウントを作成しました。ようこそ、#{@user.name}さん！"
+      flash[:notice] = "アカウントを作成しました。ようこそ！"
       redirect_to root_path
     else
       render :new, status: :unprocessable_entity
