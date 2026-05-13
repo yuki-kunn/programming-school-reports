@@ -98,13 +98,12 @@
         });
       }
 
-      // 初回ロード
-      document.addEventListener('DOMContentLoaded', setupMobileMenu);
-
-      // Turbo ページ遷移後（メニューを閉じる ＋ リスナー再登録）
+      // turbo:load は初回ロード時にも発火するため DOMContentLoaded は不要
       document.addEventListener('turbo:load', function() {
         var menu = document.getElementById('mobile-menu');
+        var btn  = document.getElementById('hamburger-btn');
         if (menu) menu.classList.add('hidden');
+        if (btn)  btn.setAttribute('aria-expanded', 'false');
         setupMobileMenu();
       });
     </script>
