@@ -1,13 +1,4 @@
 # ============================================================
-# 本番・開発共通: マスタデータ（タグ）
-# ============================================================
-Tag.find_or_create_by!(name: 'FS')
-Tag.find_or_create_by!(name: 'LEGO')
-Tag.find_or_create_by!(name: 'mbot2')
-
-puts "タグを作成しました（FS / LEGO / mbot2）"
-
-# ============================================================
 # 本番用: 管理者ユーザー
 # ============================================================
 yuki_admin = User.find_or_initialize_by(email: 'hokuyoyuki@gmail.com')
@@ -34,14 +25,10 @@ unless Rails.env.production?
     u.role = :general
   end
 
-  fs_tag   = Tag.find_by!(name: 'FS')
-  lego_tag = Tag.find_by!(name: 'LEGO')
-  mbot_tag = Tag.find_by!(name: 'mbot2')
-
   students = [
-    { name: '田中 花子', admission_date: '2025-04-01', enrollment_status: :active,    tag: fs_tag },
-    { name: '佐藤 一郎', admission_date: '2025-04-01', enrollment_status: :active,    tag: lego_tag },
-    { name: '山田 次郎', admission_date: '2024-04-01', enrollment_status: :graduated, tag: mbot_tag },
+    { name: '田中 花子', admission_date: '2025-04-01', enrollment_status: :active },
+    { name: '佐藤 一郎', admission_date: '2025-04-01', enrollment_status: :active },
+    { name: '山田 次郎', admission_date: '2024-04-01', enrollment_status: :graduated },
   ].map do |attrs|
     student = Student.find_or_initialize_by(name: attrs[:name])
     student.assign_attributes(attrs)
