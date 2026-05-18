@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
     elsif (user_id  = cookies.encrypted[:remember_user_id]) &&
           (token    = cookies.encrypted[:remember_token])
       user = User.find_by(id: user_id)
-      if user&.authenticated_by_token?(token)
+      if user&.authenticated_by_token?(token) && user.active?
         reset_session
         session[:user_id] = user.id
         @current_user = user
@@ -26,8 +26,15 @@ class ApplicationController < ActionController::Base
   end
 
   def require_login
-    unless logged_in?
+    if !logged_in?
       flash[:alert] = "ログインしてください"
+      redirect_to new_session_path
+    elsif !current_user.active?
+      current_user.forget
+      reset_session
+      cookies.delete(:remember_user_id)
+      cookies.delete(:remember_token)
+      flash[:alert] = "このアカウントは無効化されています。管理者にお問い合わせください。"
       redirect_to new_session_path
     end
   end

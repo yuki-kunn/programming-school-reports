@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :require_admin
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: [:show, :update, :destroy, :toggle_active]
 
   def index
     @users = User.order(role: :desc, name: :asc).page(params[:page]).per(20)
@@ -88,6 +88,25 @@ class Admin::UsersController < ApplicationController
     @user.destroy
     flash[:notice] = "#{user_name} のアカウントを削除しました"
     redirect_to admin_users_path
+  end
+
+  def toggle_active
+    if @user == current_user
+      flash[:alert] = "自分自身のアカウントは変更できません"
+      return redirect_to admin_user_path(@user)
+    end
+    if @user.superadmin?
+      flash[:alert] = "スーパー管理者のアカウントは変更できません"
+      return redirect_to admin_user_path(@user)
+    end
+
+    new_status = !@user.active
+    @user.update_column(:active, new_status)
+    @user.forget unless new_status   # 無効化時は remember token も破棄
+
+    status_label = new_status ? "有効化" : "無効化"
+    flash[:notice] = "#{@user.name} のアカウントを#{status_label}しました"
+    redirect_to admin_user_path(@user)
   end
 
   private

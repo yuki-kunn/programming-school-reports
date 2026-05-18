@@ -20,13 +20,16 @@
         </thead>
         <tbody class="divide-y divide-slate-100">
           <% @users.each do |user| %>
-            <tr class="hover:bg-slate-50 transition-colors">
+            <tr class="<%= user.active? ? 'hover:bg-slate-50' : 'bg-slate-100 opacity-60' %> transition-colors">
               <td class="px-6 py-4 font-medium text-slate-900">
                 <div class="flex items-center gap-3">
                   <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 text-sm font-bold shrink-0">
                     <%= user.name&.chars&.first || "?" %>
                   </div>
-                  <%= user.name %>
+                  <span><%= user.name %></span>
+                  <% unless user.active? %>
+                    <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-red-100 text-red-600">無効</span>
+                  <% end %>
                 </div>
               </td>
               <td class="px-6 py-4 text-slate-500"><%= user.email %></td>

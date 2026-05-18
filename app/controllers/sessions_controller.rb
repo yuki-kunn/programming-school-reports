@@ -7,6 +7,10 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(email: params[:session][:email].downcase)
     if user&.authenticate(params[:session][:password])
+      unless user.active?
+        flash.now[:alert] = "このアカウントは無効化されています。管理者にお問い合わせください。"
+        return render :new, status: :unprocessable_entity
+      end
       reset_session                    # セッション固定攻撃対策
       session[:user_id] = user.id
 
