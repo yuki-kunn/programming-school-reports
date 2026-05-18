@@ -17,6 +17,10 @@ class Admin::UsersController < ApplicationController
   def create
     @user = User.new(create_user_params)
     @user.force_password_change = true
+    if @user.superadmin?
+      flash[:alert] = "スーパー管理者権限はこの画面から付与できません"
+      return redirect_to new_admin_user_path
+    end
     if @user.save
       flash[:notice] = "#{@user.name} のアカウントを作成しました"
       redirect_to admin_users_path
@@ -31,7 +35,19 @@ class Admin::UsersController < ApplicationController
       return redirect_to admin_users_path
     end
 
+    # superadmin のロールは変更不可
+    if @user.superadmin?
+      flash[:alert] = "スーパー管理者の権限は変更できません"
+      return redirect_to admin_user_path(@user)
+    end
+
     new_role = params.dig(:user, :role)
+
+    # superadmin への昇格不可
+    if new_role == "superadmin"
+      flash[:alert] = "スーパー管理者権限はこの画面から付与できません"
+      return redirect_to admin_user_path(@user)
+    end
     unless User.roles.key?(new_role)
       flash[:alert] = "無効な権限値です"
       return redirect_to admin_user_path(@user)
@@ -55,6 +71,12 @@ class Admin::UsersController < ApplicationController
     if @user == current_user
       flash[:alert] = "自分自身のアカウントは削除できません"
       return redirect_to admin_users_path
+    end
+
+    # superadmin は削除不可
+    if @user.superadmin?
+      flash[:alert] = "スーパー管理者のアカウントは削除できません"
+      return redirect_to admin_user_path(@user)
     end
 
     if @user.admin? && User.where(role: :admin).count == 1

@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :require_login
   before_action :check_force_password_change
-  helper_method :current_user, :logged_in?
+  helper_method :current_user, :logged_in?, :admin_or_above?
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
@@ -42,10 +42,14 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin
-    unless current_user&.admin?
+    unless admin_or_above?
       flash[:alert] = "管理者権限が必要です"
       redirect_to root_path
     end
+  end
+
+  def admin_or_above?
+    current_user&.admin? || current_user&.superadmin?
   end
 
   def record_not_found

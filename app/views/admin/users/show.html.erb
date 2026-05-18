@@ -35,7 +35,12 @@
     <h2 class="text-base font-semibold text-slate-700 mb-1">権限の変更</h2>
     <p class="text-sm text-slate-500 mb-4">このユーザーの管理者権限を変更します</p>
 
-    <% if @user == current_user %>
+    <% if @user.superadmin? %>
+      <div class="flex items-center gap-2 rounded-lg bg-violet-50 border border-violet-200 px-4 py-3">
+        <span class="text-violet-400 text-sm">🔒</span>
+        <p class="text-sm text-violet-700">スーパー管理者の権限は変更できません</p>
+      </div>
+    <% elsif @user == current_user %>
       <div class="flex items-center gap-2 rounded-lg bg-slate-50 border border-slate-200 px-4 py-3">
         <span class="text-slate-400 text-sm">⚠</span>
         <p class="text-sm text-slate-500">自分自身の権限は変更できません</p>
@@ -63,7 +68,7 @@
   <%= render "recent_reports", reports: @reports %>
 
   <%# アカウント削除カード %>
-  <% unless @user == current_user %>
+  <% unless @user == current_user || @user.superadmin? %>
     <div class="bg-white rounded-xl shadow-sm border border-red-200 p-4 sm:p-8 mt-6">
       <h2 class="text-base font-semibold text-red-700 mb-1">アカウントの削除</h2>
       <p class="text-sm text-slate-500 mb-4">

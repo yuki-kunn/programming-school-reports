@@ -35,7 +35,7 @@
                 <div class="flex items-center justify-end gap-1">
                   <%= link_to "詳細", admin_user_path(user),
                       class: "text-xs font-medium text-slate-600 hover:text-indigo-600 border border-slate-200 hover:border-indigo-300 rounded-md px-3 py-1.5 transition-colors" %>
-                  <% unless user == current_user %>
+                  <% unless user == current_user || user.superadmin? %>
                     <%= button_to "削除", admin_user_path(user),
                         method: :delete,
                         class: "text-xs font-medium text-red-500 hover:text-red-700 border border-red-200 hover:border-red-400 rounded-md px-3 py-1.5 transition-colors cursor-pointer bg-transparent",

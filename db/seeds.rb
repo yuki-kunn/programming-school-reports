@@ -13,10 +13,10 @@ puts "タグを作成しました（FS / LEGO / mbot2）"
 yuki_admin = User.find_or_initialize_by(email: 'hokuyoyuki@gmail.com')
 yuki_admin.name = '管理者' if yuki_admin.name.blank?
 yuki_admin.password = ENV.fetch('YUKI_ADMIN_PASSWORD', 'ChangeMe2025!') if yuki_admin.new_record?
-yuki_admin.role = :admin
+yuki_admin.role = :superadmin
 yuki_admin.save!
 
-puts "本番管理者: hokuyoyuki@gmail.com (role=admin)"
+puts "本番管理者: hokuyoyuki@gmail.com (role=superadmin)"
 
 # ============================================================
 # 開発環境のみ: ダミーデータ

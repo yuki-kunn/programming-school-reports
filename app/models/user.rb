@@ -2,7 +2,7 @@ class User < ApplicationRecord
   has_secure_password
   has_many :reports, dependent: :destroy
 
-  enum role: { general: 0, admin: 1 }
+  enum role: { general: 0, admin: 1, superadmin: 2 }
 
   before_save { self.email = email.downcase }
 
