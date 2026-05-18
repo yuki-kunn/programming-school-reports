@@ -8,7 +8,17 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user
-    @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+    if session[:user_id]
+      @current_user ||= User.find_by(id: session[:user_id])
+    elsif (user_id  = cookies.encrypted[:remember_user_id]) &&
+          (token    = cookies.encrypted[:remember_token])
+      user = User.find_by(id: user_id)
+      if user&.authenticated_by_token?(token)
+        reset_session
+        session[:user_id] = user.id
+        @current_user = user
+      end
+    end
   end
 
   def logged_in?
