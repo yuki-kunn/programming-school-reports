@@ -3,7 +3,7 @@
 <%= render "shared/page_header",
     title: "生徒管理",
     subtitle: "在籍生徒の情報を管理します",
-    action: (current_user&.admin? ? link_to("＋ 新規生徒登録", new_student_path,
+    action: (admin_or_above? ? link_to("＋ 新規生徒登録", new_student_path,
       class: "inline-flex items-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors") : nil) %>
 
 <% if @students.any? %>
@@ -44,7 +44,7 @@
               <div class="flex flex-wrap items-center justify-end gap-1">
                 <%= link_to "詳細", student,
                     class: "text-xs font-medium text-slate-600 hover:text-indigo-600 border border-slate-200 hover:border-indigo-300 rounded-md px-3 py-1.5 transition-colors" %>
-                <% if current_user&.admin? %>
+                <% if admin_or_above? %>
                   <%= link_to "編集", edit_student_path(student),
                       class: "text-xs font-medium text-slate-600 hover:text-indigo-600 border border-slate-200 hover:border-indigo-300 rounded-md px-3 py-1.5 transition-colors" %>
                   <%= button_to "削除", student, method: :delete,
@@ -64,6 +64,6 @@
   <%= render "shared/empty_state",
       icon: "👤",
       message: "まだ生徒が登録されていません",
-      action: (current_user&.admin? ? link_to("生徒を登録する", new_student_path,
+      action: (admin_or_above? ? link_to("生徒を登録する", new_student_path,
         class: "inline-flex mt-6 items-center rounded-lg bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors") : nil) %>
 <% end %>
